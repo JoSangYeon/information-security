@@ -8,6 +8,9 @@ import threading
 import pandas as pd
 
 SCRIPT = {
+    """
+    Test에 사용될 설문 스크립트 각 설문에 맞게 dictionary형태로 구성함 
+    """
     'Survey1' : [['나는 성과중심의 가치를 추구한다.',
                   '나는 일을 할 때, 성취 결과를 중요시한다.',
                   '나는 높은 성과를 이루는 것을 선호한다.'],
@@ -44,6 +47,10 @@ SCRIPT = {
 }
 
 class Main_Frame(tk.Frame):
+    """
+    화면 1-1를 구성하는 Frame class
+    2021.07.19 - 추후에 화면구성에 조금더 신경을 쓸 예정 당장은 기능 구현에 힘을 쓰겠다.
+    """
     def __init__(self, app):
         tk.Frame.__init__(self, app)
         self.app = app
@@ -52,9 +59,18 @@ class Main_Frame(tk.Frame):
         ttk.Button(self, text="시작하기", command=self.start_app).pack()
 
     def start_app(self):
+        """
+        버튼을 클릭하면, 다음화면(Frame(화면 2-1))으로 switching하는 메소드
+        :return:
+        """
         self.app.switch_frame(Survey1)
 
 class Survey1(tk.Frame):
+    """
+    화면 2-1을 구성하는 Frame class
+    개인 특성 측정을 구현
+    2021.07.19 - 현재 뼈대 정도만 구현 세부 기능은 추후에 설계
+    """
     def __init__(self, app):
         tk.Frame.__init__(self, app)
         self.app = app
@@ -68,31 +84,35 @@ class Survey1(tk.Frame):
         desc1.pack()
         desc2.pack()
 
-        self.checkvar = []
+        self.checkvar = []                          # checkBox의 check여부를 저장하는 변수를 담는 list
         ttk.Label(self, text='--- '*25, font=('나눔고딕', 10)).pack(pady=3)
-        scr = SCRIPT['Survey1']
+        scr = SCRIPT['Survey1']                     # 스크립트에서 설문1에 대한 내용을 받아옴
         for i in range(len(scr)):
             temp = []
             for k in range(len(scr[i])):
-                temp_frame = tk.Frame(self)
+                temp_frame = tk.Frame(self)         # 각 설문요인을 담는 frame
 
-                surv_frame = tk.Frame(temp_frame)
+                surv_frame = tk.Frame(temp_frame)   # 각각의 설문 내용을 담는 frame
                 ttk.Label(surv_frame, text=scr[i][k], font=('나눔고딕', 10)).pack()
                 surv_frame.pack(side='left', expand=True)
 
-                check_frame = tk.Frame(temp_frame)
+                check_frame = tk.Frame(temp_frame)  # 각 설문에 대한 checkbox를 담는 frame
                 temp.append([tk.IntVar() for _ in range(6)])
                 for j in range(6):
-                    ttk.Checkbutton(check_frame, variable=temp[k][j]).pack(side='left')
+                    ttk.Checkbutton(check_frame, variable=temp[k][j]).pack(side='left') # checkBox 생성
                 check_frame.pack(side='right', expand=True)
 
                 temp_frame.pack(anchor='e')
-            self.checkvar.append(temp)
+            self.checkvar.append(temp)              # checkvar 갱신
             ttk.Label(self, text='--- '*25,font=('나눔고딕', 10)).pack(pady=3)
 
         ttk.Button(self, text='check', command=self.check).pack()
 
     def check(self):
+        """
+        체크박스의 check여부를 판단하는 메소드
+        2021.07.19 - 현재는 중복기능 없이 구현 추후에 구현할 예정 
+        """
         for i in range(len(self.checkvar)):
             for k in range(len(self.checkvar[i])):
                 for j in range(len(self.checkvar[i][k])):
