@@ -79,18 +79,20 @@ class Survey1(tk.Frame):
         title = ttk.Label(self, text="개인 특성 측정", font=font)
         desc1 = ttk.Label(self, text="다음은 본인 생각하는 본인의 특성을 측정하는 항목입니다.", font=('나눔고딕', 10))
         desc2 = ttk.Label(self, text="측정항목은 6점 척도로 구성되어 있으며, 해당되는 부분에 체크해주시기 바랍니다.", font=('나눔고딕', 10))
+        desc3 = ttk.Label(self, text="1 : 매우 그렇지 않다.\n6 : 매우 그렇다.", font=('나눔고딕', 7))
 
         title.pack(pady=5)
         desc1.pack()
         desc2.pack()
+        desc3.pack(anchor="w")
 
+        ttk.Label(self, text='--- ' * 26, font=('나눔고딕', 10)).pack(pady=3)
+        ttk.Label(self, text="1     2     3     4     5    6").pack(anchor='e', pady=1, ipady=2.4)
         self.checkvar = []                          # checkBox의 check여부를 저장하는 변수를 담는 list
-        ttk.Label(self, text='--- '*26, font=('나눔고딕', 10)).pack(pady=3)
         scr = SCRIPT['Survey1']                     # 스크립트에서 설문1에 대한 내용을 받아옴
-
-        temp_frame = tk.Frame(self)  # 각 설문요인을 담는 frame
-        surv_frame = tk.Frame(temp_frame)  # 각각의 설문 내용을 담는 frame
-        check_frame = tk.Frame(temp_frame)  # 각 설문에 대한 checkbox를 담는 frame
+        temp_frame = tk.Frame(self)                 # 각 설문요인을 담는 frame
+        surv_frame = tk.Frame(temp_frame)           # 각각의 설문 내용을 담는 frame
+        check_frame = tk.Frame(temp_frame)          # 각 설문에 대한 checkbox를 담는 frame
         for i in range(len(scr)):
             temp = []
             for k in range(len(scr[i])):
@@ -128,7 +130,7 @@ class Project(tk.Tk):
         self.data = None
         tk.Tk.__init__(self)
         self.title("정보보안 솔루션") # 제목 설정
-        self.geometry("640x480+640+300") # 크기/위치 설정 (가로*세로+x좌표+y좌료)
+        self.geometry("640x520+640+300") # 크기/위치 설정 (가로*세로+x좌표+y좌료)
         self.resizable(False, False) #창 크기 변경 (너비, 높이)
         self._frame = None
         self.switch_frame(Main_Frame)
