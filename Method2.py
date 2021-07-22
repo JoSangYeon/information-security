@@ -85,26 +85,28 @@ class Survey1(tk.Frame):
         desc2.pack()
 
         self.checkvar = []                          # checkBox의 check여부를 저장하는 변수를 담는 list
-        ttk.Label(self, text='--- '*25, font=('나눔고딕', 10)).pack(pady=3)
+        ttk.Label(self, text='--- '*26, font=('나눔고딕', 10)).pack(pady=3)
         scr = SCRIPT['Survey1']                     # 스크립트에서 설문1에 대한 내용을 받아옴
+
+        temp_frame = tk.Frame(self)  # 각 설문요인을 담는 frame
+        surv_frame = tk.Frame(temp_frame)  # 각각의 설문 내용을 담는 frame
+        check_frame = tk.Frame(temp_frame)  # 각 설문에 대한 checkbox를 담는 frame
         for i in range(len(scr)):
             temp = []
             for k in range(len(scr[i])):
-                temp_frame = tk.Frame(self)         # 각 설문요인을 담는 frame
+                ttk.Label(surv_frame, text=scr[i][k], font=('나눔고딕', 10)).pack(anchor='w', pady=1.5)
 
-                surv_frame = tk.Frame(temp_frame)   # 각각의 설문 내용을 담는 frame
-                ttk.Label(surv_frame, text=scr[i][k], font=('나눔고딕', 10)).pack()
-                surv_frame.pack(side='left', expand=True)
-
-                check_frame = tk.Frame(temp_frame)  # 각 설문에 대한 checkbox를 담는 frame
+                inner_frame = tk.Frame(check_frame)
                 temp.append([tk.IntVar() for _ in range(6)])
                 for j in range(6):
-                    ttk.Checkbutton(check_frame, variable=temp[k][j]).pack(side='left') # checkBox 생성
-                check_frame.pack(side='right', expand=True)
-
-                temp_frame.pack(anchor='e')
-            self.checkvar.append(temp)              # checkvar 갱신
-            ttk.Label(self, text='--- '*25,font=('나눔고딕', 10)).pack(pady=3)
+                    ttk.Checkbutton(inner_frame, variable=temp[k][j]).pack(side='left') # checkBox 생성
+                inner_frame.pack(anchor='e')
+            self.checkvar.append(temp)  # checkvar 갱신
+            ttk.Label(surv_frame, text='--- ' * 18, font=('나눔고딕', 10)).pack(pady=3, anchor='w')
+            ttk.Label(check_frame, text='--- ' * 8, font=('나눔고딕', 10)).pack(pady=3, anchor='e')
+        surv_frame.pack(side='left', expand=True)
+        check_frame.pack(side='right', expand=True)
+        temp_frame.pack(expand=True)
 
         ttk.Button(self, text='check', command=self.check).pack()
 
@@ -113,6 +115,7 @@ class Survey1(tk.Frame):
         체크박스의 check여부를 판단하는 메소드
         2021.07.19 - 현재는 중복기능 없이 구현 추후에 구현할 예정 
         """
+        print(self.checkvar)
         for i in range(len(self.checkvar)):
             for k in range(len(self.checkvar[i])):
                 for j in range(len(self.checkvar[i][k])):
