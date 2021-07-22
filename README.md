@@ -11,7 +11,7 @@
 + 인터넷이 없는 환경이슈와 폼(.gform)과 시트(.gsheet)의 보안 이슈때문에 Method 1은 보류
 
 2021.07.19
-+ Only tkinter를 이용한 Model 설계
++ Only tkinter를 이용한 Model 설계(=Method2.py)
 + 화면 2-1의 뼈대 정도만 작업함
 + 구체적인 외형(GUI)는 추후에 작업
 + 기능을 중점적으로 구현할 예정

@@ -7,11 +7,11 @@ import time
 import threading
 import pandas as pd
 
+"""
+Test에 사용될 설문 스크립트 각 설문에 맞게 dictionary형태로 구성함 
+"""
 SCRIPT = {
-    """
-    Test에 사용될 설문 스크립트 각 설문에 맞게 dictionary형태로 구성함 
-    """
-    'Survey1' : [['나는 성과중심의 가치를 추구한다.',
+    'Survey1': [['나는 성과중심의 가치를 추구한다.',
                   '나는 일을 할 때, 성취 결과를 중요시한다.',
                   '나는 높은 성과를 이루는 것을 선호한다.'],
                  ['나는 인간관계중심의 가치를 추구한다.',
