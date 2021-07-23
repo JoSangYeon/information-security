@@ -2,6 +2,7 @@
 """
 import tkinter as tk
 import tkinter.font
+import tkinter.messagebox as msg
 from tkinter import ttk
 import time
 import threading
@@ -117,13 +118,25 @@ class Survey1(tk.Frame):
         체크박스의 check여부를 판단하는 메소드
         2021.07.19 - 현재는 중복기능 없이 구현 추후에 구현할 예정 
         """
-        print(self.checkvar)
+        f = pd.read_csv("individual_attribute.csv")
+        data = {"date":time.strftime('%Y-%m-%d %I:%M:%S %p', time.localtime())}
+
         for i in range(len(self.checkvar)):
             for k in range(len(self.checkvar[i])):
+                key = "Q"+str(i+1)+"-"+str(k+1)
+                check = False
                 for j in range(len(self.checkvar[i][k])):
-                    print(self.checkvar[i][k][j].get(), end=" ")
-                print()
-            print("--- - - - ---")
+                    if not check and self.checkvar[i][k][j].get() == 1:
+                        check = True
+                        data[key] = j+1
+                    elif check and self.checkvar[i][k][j].get() == 1:
+                        msg.showwarning("Message","Q%i-%i항목이 중복체크 되어있습니다."%(i+1, k+1))
+                        return
+                if not check:
+                    msg.showwarning("Message","Q%i-%i항목을 체크해주세요."%(i+1, k+1))
+                    return
+        f = f.append(pd.DataFrame([data]))
+        f.to_csv('individual_attribute.csv', sep=",", index=False)
 
 class Project(tk.Tk):
     def __init__(self):
