@@ -1,8 +1,7 @@
-import Method1
-import Method2
+import Solution
 
 def main():
-    p = Method2.Project()
+    p = Solution.Project()
     p.mainloop()
 
 if __name__ == '__main__':
