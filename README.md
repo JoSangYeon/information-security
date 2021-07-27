@@ -49,3 +49,4 @@
   + 용어 정리...등등?
 + 또한 방사형 차트를 matplotlib.pyplot으로도 연습함
 + 위에서 가져온 설문 결과 데이터의 계산값을 방사형 차트로 표현해야됨
+  + https://www.google.com/search?q=matplotlib+%EB%B0%A9%EC%82%AC%ED%98%95+%EC%B0%A8%ED%8A%B8&source=lmns&bih=888&biw=1427&hl=ko&sa=X&ved=2ahUKEwiJ-cia0oLyAhVBYZQKHWnSCdYQ_AUoAHoECAEQAA
