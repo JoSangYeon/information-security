@@ -9,14 +9,14 @@ from matplotlib.transforms import Affine2D
 
 ## 데이터 준비
 df = pd.DataFrame({
-    'Character': ['ind', 'cul', 'ind-cul'],
-    'x1': [5.333, 5.2, 4.867],
-    'x2': [5.667, 4.6, 3.933],
-    'x3': [5.333, 4.267, 3.934],
-    'x4': [3.667, 4.867, 3.8],
+    'Character': ['ind-cul'],
+    '가나': [4.867**2],
+    '다라': [3.933**2],
+    '마바': [3.934**2],
+    '사아': [3.8**2],
 })
 print(df)
-
+plt.rcParams['font.family'] = 'Malgun Gothic'
 ## 하나로 합치기
 labels = df.columns[1:]
 num_labels = len(labels)
@@ -41,8 +41,8 @@ for i, row in df.iterrows():
     ax.tick_params(axis='x', which='major', pad=15)  ## 각 축과 눈금 사이에 여백을 준다.
 
     ax.set_rlabel_position(0)  ## 반지름 축 눈금 라벨 각도 설정(degree 단위)
-    plt.yticks([0, 2, 4, 6, 8, 10], ['0', '2', '4', '6', '8', '10'], fontsize=10)  ## 반지름 축 눈금 설정
-    plt.ylim(0, 10)
+    plt.yticks([0, 5, 10, 15, 20, 25], ['0', '5', '10', '15', '20', '25'], fontsize=10)  ## 반지름 축 눈금 설정
+    plt.ylim(0, 25)
 
     ax.plot(angles, data, color=color, linewidth=2, linestyle='solid', label=row.Character)  ## 레이더 차트 출력
     ax.fill(angles, data, color=color, alpha=0.4)  ## 도형 안쪽에 색을 채워준다.
