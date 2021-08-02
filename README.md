@@ -50,3 +50,10 @@
 + 또한 방사형 차트를 matplotlib.pyplot으로도 연습함
 + 위에서 가져온 설문 결과 데이터의 계산값을 방사형 차트로 표현해야됨
   + https://www.google.com/search?q=matplotlib+%EB%B0%A9%EC%82%AC%ED%98%95+%EC%B0%A8%ED%8A%B8&source=lmns&bih=888&biw=1427&hl=ko&sa=X&ved=2ahUKEwiJ-cia0oLyAhVBYZQKHWnSCdYQ_AUoAHoECAEQAA
+  
+2021.08.02
++ Result.py 화면 3-1까지 구현완료
+  + 최근 설문에 응한 사람(개인)에 대해서 결과를 출력하는지
+  + 아니면 개인 측정 전체에 대한 결과를 출력하는지 모호
++ 화면 3-2는 python의 산점도 예제를 이용해서 설계할 예정...
+  + 전략 수립 화면에 대한 Script를 어떤식으로 출력하지도 고려
