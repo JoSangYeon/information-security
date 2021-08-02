@@ -6,6 +6,7 @@ import time
 import threading
 import pandas as pd
 import Survey
+import Result
 
 class Main_Frame(tk.Frame):
     """
@@ -15,7 +16,7 @@ class Main_Frame(tk.Frame):
     def __init__(self, app):
         tk.Frame.__init__(self, app)
         self.app = app
-        font = tkinter.font.Font(family="나눔고딕", size=18, weight="bold")
+        font = tkinter.font.Font(family="나눔고딕", size=16, weight="bold")
         tk.Label(self, text="인간요인 강화 정보보안 대처 솔루션", font=font).pack()
         ttk.Button(self, text="시작하기", command=self.start_app).pack()
 
@@ -24,7 +25,8 @@ class Main_Frame(tk.Frame):
         버튼을 클릭하면, 다음화면(Frame(화면 2-1))으로 switching하는 메소드
         :return:
         """
-        self.app.switch_frame(Survey.Survey1)
+        # self.app.switch_frame(Survey.Survey1)
+        self.app.switch_frame(Result.Result1)
 
 class Project(tk.Tk):
     def __init__(self):

@@ -7,6 +7,7 @@ import threading
 import pandas as pd
 
 import Solution
+import Result
 
 """
 Test에 사용될 설문 스크립트 각 설문에 맞게 dictionary형태로 구성함 
@@ -56,7 +57,7 @@ class Survey1(tk.Frame):
     def __init__(self, app):
         tk.Frame.__init__(self, app)
         self.app = app
-        font = tkinter.font.Font(family="나눔고딕", size=14, weight="bold")
+        font = tkinter.font.Font(family="나눔고딕", size=16, weight="bold")
 
         title = ttk.Label(self, text="개인 특성 측정", font=font)
         desc1 = ttk.Label(self, text="다음은 본인 생각하는 본인의 특성을 측정하는 항목입니다.", font=('나눔고딕', 10))
@@ -129,7 +130,7 @@ class Survey2(tk.Frame):
     def __init__(self, app):
         tk.Frame.__init__(self, app)
         self.app = app
-        font = tkinter.font.Font(family="나눔고딕", size=14, weight="bold")
+        font = tkinter.font.Font(family="나눔고딕", size=16, weight="bold")
 
         title = ttk.Label(self, text="조직 특성 측정", font=font)
         desc1 = ttk.Label(self, text="다음은 본인 생각하는 우리 회사의 특성을 측정하는 항목입니다.", font=('나눔고딕', 10))
@@ -202,7 +203,7 @@ class Survey3(tk.Frame):
     def __init__(self, app):
         tk.Frame.__init__(self, app)
         self.app = app
-        font = tkinter.font.Font(family="나눔고딕", size=14, weight="bold")
+        font = tkinter.font.Font(family="나눔고딕", size=16, weight="bold")
 
         title = ttk.Label(self, text="정보보안 수준 측정", font=font)
         desc1 = ttk.Label(self, text="다음은 본인 생각하는 우리 회사의 정보보안 수준을 측정하는 항목입니다.", font=('나눔고딕', 10))
@@ -271,4 +272,4 @@ class Survey3(tk.Frame):
         f = f.append(pd.DataFrame([data]))
         f.to_csv("Information_Security_Level.csv", sep=",", index=False)
         msg.showinfo("Message", "설문 내용이 정상적으로 입력되었습니다.")
-        self.app.switch_frame(Solution.Main_Frame)
+        self.app.switch_frame(Result.Result1)
