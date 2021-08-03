@@ -16,16 +16,25 @@ class Main_Frame(tk.Frame):
     def __init__(self, app):
         tk.Frame.__init__(self, app)
         self.app = app
-        font = tkinter.font.Font(family="나눔고딕", size=16, weight="bold")
-        tk.Label(self, text="인간요인 강화 정보보안 대처 솔루션", font=font).pack()
+        self.app.geometry("400x200+640+150")  # 크기/위치 설정 (가로*세로+x좌표+y좌료)
+        font = tkinter.font.Font(family="Malgun Gothic", size=16, weight="bold")
+        ttk.Label(self, text="인간요인 강화 정보보안 대처 솔루션", font=font).pack()
         ttk.Button(self, text="시작하기", command=self.start_app).pack()
+        ttk.Button(self, text="결과보기", command=self.start_result).pack()
+        ttk.Button(self, text="종료하기", command=self.app.quit).pack()
 
     def start_app(self):
         """
         버튼을 클릭하면, 다음화면(Frame(화면 2-1))으로 switching하는 메소드
         :return:
         """
-        # self.app.switch_frame(Survey.Survey1)
+        self.app.switch_frame(Survey.Survey1)
+
+    def start_result(self):
+        """
+        버튼을 클릭하면, 결과화면(Frame(화면 3-1))으로 switching하는 메소드
+        :return:
+        """
         self.app.switch_frame(Result.Result1)
 
 class Project(tk.Tk):
@@ -33,7 +42,6 @@ class Project(tk.Tk):
         self.data = None
         tk.Tk.__init__(self)
         self.title("정보보안 솔루션") # 제목 설정
-        self.geometry("640x560+640+200") # 크기/위치 설정 (가로*세로+x좌표+y좌료)
         self.resizable(False, False) #창 크기 변경 (너비, 높이)
         self._frame = None
         self.switch_frame(Main_Frame)

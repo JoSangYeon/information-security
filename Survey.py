@@ -57,19 +57,20 @@ class Survey1(tk.Frame):
     def __init__(self, app):
         tk.Frame.__init__(self, app)
         self.app = app
-        font = tkinter.font.Font(family="나눔고딕", size=16, weight="bold")
+        self.app.geometry("640x580+640+150")  # 크기/위치 설정 (가로*세로+x좌표+y좌료)
+        font = tkinter.font.Font(family="Malgun Gothic", size=16, weight="bold")
 
         title = ttk.Label(self, text="개인 특성 측정", font=font)
-        desc1 = ttk.Label(self, text="다음은 본인 생각하는 본인의 특성을 측정하는 항목입니다.", font=('나눔고딕', 10))
-        desc2 = ttk.Label(self, text="측정항목은 6점 척도로 구성되어 있으며, 해당되는 부분에 체크해주시기 바랍니다.", font=('나눔고딕', 10))
-        desc3 = ttk.Label(self, text="1 : 매우 그렇지 않다.\n6 : 매우 그렇다.", font=('나눔고딕', 7))
+        desc1 = ttk.Label(self, text="다음은 본인 생각하는 본인의 특성을 측정하는 항목입니다.", font=('Malgun Gothic', 10))
+        desc2 = ttk.Label(self, text="측정항목은 6점 척도로 구성되어 있으며, 해당되는 부분에 체크해주시기 바랍니다.", font=('Malgun Gothic', 10))
+        desc3 = ttk.Label(self, text="1 : 매우 그렇지 않다.\n6 : 매우 그렇다.", font=('Malgun Gothic', 7))
 
         title.pack(pady=5)
         desc1.pack()
         desc2.pack()
         desc3.pack(anchor="w")
 
-        ttk.Label(self, text='--- ' * 26, font=('나눔고딕', 10)).pack(pady=3)
+        ttk.Label(self, text='--- ' * 35, font=('Malgun Gothic', 10)).pack(pady=3)
         ttk.Label(self, text="1     2     3     4     5    6").pack(anchor='e', pady=1, ipady=2.4)
         self.checkvar = []                          # checkBox의 check여부를 저장하는 변수를 담는 list
         scr = SCRIPT['Survey1']                     # 스크립트에서 설문1에 대한 내용을 받아옴
@@ -79,7 +80,7 @@ class Survey1(tk.Frame):
         for i in range(len(scr)):
             temp = []
             for k in range(len(scr[i])):
-                ttk.Label(surv_frame, text=scr[i][k], font=('나눔고딕', 10)).pack(anchor='w', pady=1.5)
+                ttk.Label(surv_frame, text=scr[i][k], font=('Malgun Gothic', 10)).pack(anchor='w')
 
                 inner_frame = tk.Frame(check_frame)
                 temp.append([tk.IntVar() for _ in range(6)])
@@ -87,8 +88,8 @@ class Survey1(tk.Frame):
                     ttk.Checkbutton(inner_frame, variable=temp[k][j]).pack(side='left') # checkBox 생성
                 inner_frame.pack(anchor='e')
             self.checkvar.append(temp)  # checkvar 갱신
-            ttk.Label(surv_frame, text='--- ' * 18, font=('나눔고딕', 10)).pack(pady=3, anchor='w')
-            ttk.Label(check_frame, text='--- ' * 8, font=('나눔고딕', 10)).pack(pady=3, anchor='e')
+            ttk.Label(surv_frame, text='--- ' * 25, font=('Malgun Gothic', 10)).pack(pady=3, anchor='w')
+            ttk.Label(check_frame, text='--- ' * 10, font=('Malgun Gothic', 10)).pack(pady=3, anchor='e')
         surv_frame.pack(side='left', expand=True)
         check_frame.pack(side='right', expand=True)
         temp_frame.pack(expand=True)
@@ -130,19 +131,20 @@ class Survey2(tk.Frame):
     def __init__(self, app):
         tk.Frame.__init__(self, app)
         self.app = app
-        font = tkinter.font.Font(family="나눔고딕", size=16, weight="bold")
+        self.app.geometry("640x580+640+150")  # 크기/위치 설정 (가로*세로+x좌표+y좌료)
+        font = tkinter.font.Font(family="Malgun Gothic", size=16, weight="bold")
 
         title = ttk.Label(self, text="조직 특성 측정", font=font)
-        desc1 = ttk.Label(self, text="다음은 본인 생각하는 우리 회사의 특성을 측정하는 항목입니다.", font=('나눔고딕', 10))
-        desc2 = ttk.Label(self, text="측정항목은 6점 척도로 구성되어 있으며, 해당되는 부분에 체크해주시기 바랍니다.", font=('나눔고딕', 10))
-        desc3 = ttk.Label(self, text="1 : 매우 그렇지 않다.\n6 : 매우 그렇다.", font=('나눔고딕', 7))
+        desc1 = ttk.Label(self, text="다음은 본인 생각하는 우리 회사의 특성을 측정하는 항목입니다.", font=('Malgun Gothic', 10))
+        desc2 = ttk.Label(self, text="측정항목은 6점 척도로 구성되어 있으며, 해당되는 부분에 체크해주시기 바랍니다.", font=('Malgun Gothic', 10))
+        desc3 = ttk.Label(self, text="1 : 매우 그렇지 않다.\n6 : 매우 그렇다.", font=('Malgun Gothic', 7))
 
         title.pack(pady=5)
         desc1.pack()
         desc2.pack()
         desc3.pack(anchor="w")
 
-        ttk.Label(self, text='--- ' * 26, font=('나눔고딕', 10)).pack(pady=3)
+        ttk.Label(self, text='--- ' * 35, font=('Malgun Gothic', 10)).pack(pady=3)
         ttk.Label(self, text="1     2     3     4     5    6").pack(anchor='e', pady=1, ipady=2.4)
         self.checkvar = []                          # checkBox의 check여부를 저장하는 변수를 담는 list
         scr = SCRIPT['Survey2']                     # 스크립트에서 설문1에 대한 내용을 받아옴
@@ -152,7 +154,7 @@ class Survey2(tk.Frame):
         for i in range(len(scr)):
             temp = []
             for k in range(len(scr[i])):
-                ttk.Label(surv_frame, text=scr[i][k], font=('나눔고딕', 10)).pack(anchor='w', pady=1.5)
+                ttk.Label(surv_frame, text=scr[i][k], font=('Malgun Gothic', 10)).pack(anchor='w')
 
                 inner_frame = tk.Frame(check_frame)
                 temp.append([tk.IntVar() for _ in range(6)])
@@ -160,8 +162,8 @@ class Survey2(tk.Frame):
                     ttk.Checkbutton(inner_frame, variable=temp[k][j]).pack(side='left') # checkBox 생성
                 inner_frame.pack(anchor='e')
             self.checkvar.append(temp)  # checkvar 갱신
-            ttk.Label(surv_frame, text='--- ' * 20, font=('나눔고딕', 10)).pack(pady=3, anchor='w')
-            ttk.Label(check_frame, text='--- ' * 10, font=('나눔고딕', 10)).pack(pady=3, anchor='e')
+            ttk.Label(surv_frame, text='--- ' * 25, font=('Malgun Gothic', 10)).pack(pady=3, anchor='w')
+            ttk.Label(check_frame, text='--- ' * 10, font=('Malgun Gothic', 10)).pack(pady=3, anchor='e')
         surv_frame.pack(side='left', expand=True)
         check_frame.pack(side='right', expand=True)
         temp_frame.pack(expand=True)
@@ -203,19 +205,20 @@ class Survey3(tk.Frame):
     def __init__(self, app):
         tk.Frame.__init__(self, app)
         self.app = app
-        font = tkinter.font.Font(family="나눔고딕", size=16, weight="bold")
+        self.app.geometry("640x640+640+150")  # 크기/위치 설정 (가로*세로+x좌표+y좌료)
+        font = tkinter.font.Font(family="Malgun Gothic", size=16, weight="bold")
 
         title = ttk.Label(self, text="정보보안 수준 측정", font=font)
-        desc1 = ttk.Label(self, text="다음은 본인 생각하는 우리 회사의 정보보안 수준을 측정하는 항목입니다.", font=('나눔고딕', 10))
-        desc2 = ttk.Label(self, text="측정항목은 5점 척도로 구성되어 있으며, 해당되는 부분에 체크해주시기 바랍니다.", font=('나눔고딕', 10))
-        desc3 = ttk.Label(self, text="1 : 매우 불만족/매우 사소.\n5 : 매우 만족/매우 중요.", font=('나눔고딕', 7))
+        desc1 = ttk.Label(self, text="다음은 본인 생각하는 우리 회사의 정보보안 수준을 측정하는 항목입니다.", font=('Malgun Gothic', 10))
+        desc2 = ttk.Label(self, text="측정항목은 5점 척도로 구성되어 있으며, 해당되는 부분에 체크해주시기 바랍니다.", font=('Malgun Gothic', 10))
+        desc3 = ttk.Label(self, text="1 : 매우 불만족/매우 사소.\n5 : 매우 만족/매우 중요.", font=('Malgun Gothic', 7))
 
         title.pack(pady=5)
         desc1.pack()
         desc2.pack()
         desc3.pack(anchor="w")
 
-        ttk.Label(self, text='--- ' * 26, font=('나눔고딕', 10)).pack(pady=3)
+        ttk.Label(self, text='--- ' * 35, font=('Malgun Gothic', 10)).pack(pady=3)
         ttk.Label(self, text="만족도\t\t\t중요도           ").pack(anchor='e')
         ttk.Label(self, text="1     2     3     4     5\t1     2     3     4     5").pack(anchor='e', ipady=2.4)
         self.checkvar = []                          # checkBox의 check여부를 저장하는 변수를 담는 list
@@ -225,7 +228,7 @@ class Survey3(tk.Frame):
         check_frame = tk.Frame(temp_frame)          # 각 설문에 대한 checkbox를 담는 frame
         for i in range(len(scr)):
             temp = []
-            ttk.Label(surv_frame, text=scr[i], font=('나눔고딕', 10)).pack(anchor='e',pady=1.5)
+            ttk.Label(surv_frame, text=scr[i], font=('Malgun Gothic', 10)).pack(anchor='e')
 
             inner_frame = tk.Frame(check_frame)
             temp.append([tk.IntVar() for _ in range(5)])
@@ -239,8 +242,8 @@ class Survey3(tk.Frame):
                 ttk.Checkbutton(inner_frame, variable=temp[1][j]).pack(side='left') # 중요도 checkBox 생성
             inner_frame.pack(anchor='e')
             self.checkvar.append(temp)  # checkvar 갱신
-            ttk.Label(surv_frame, text='--- ' * 10, font=('나눔고딕', 9)).pack(anchor='w')
-            ttk.Label(check_frame, text='--- ' * 20, font=('나눔고딕', 9)).pack(anchor='e')
+            ttk.Label(surv_frame, text='--- ' * 15, font=('Malgun Gothic', 9)).pack(anchor='w')
+            ttk.Label(check_frame, text='--- ' * 25, font=('Malgun Gothic', 9)).pack(anchor='e')
         surv_frame.pack(side='left', expand=True)
         check_frame.pack(side='right', expand=True)
         temp_frame.pack(expand=True)
