@@ -50,7 +50,7 @@ SCRIPT = {
     "result2": {"s1" : ["1. 최고경영층지원", "2. 보안규정(보상, 처벌 등)", "3. 정보보안 목표 및 가치", "4. 정보보안 시스템",
                         "5. 교육/훈련", "6. 홍보/캠페인", "7. 커뮤니케이션", "8. 보안문화", "9. 위기관리", "10. 기술지원(헬프데스크 등)"],
                 "s2" : ["우리 회사 직원들이 고려하는 정보보안 활동은 다음과 같습니다.",
-                        "첫째, 현수준 유지영역(A). 해당 영역은 정보보안 활동의 중요드는 낮으나, 만족도는 높은 영역으로서, "
+                        "첫째, 현수준 유지영역(A). 해당 영역은 정보보안 활동의 중요도는 낮으나, 만족도는 높은 영역으로서, "
                         +"\n{} 요인들의 \n지원을 유지하는 것이 필요합니다.",
                         "둘째, 유지/관리 지속영역(B). 해당 영역은 정보보안 활동의 중요도와 만족도를 높게 판단하는 영역으로서, "
                         +"\n{} 요인들의 \n높은 수준의 지원을 지속적으로 유지시키는 것이 필요합니다.",
@@ -66,7 +66,7 @@ AREA = [([0, 0, 2.5, 2.5], [2.5, 5, 5, 2.5]), ([2.5, 2.5, 5, 5], [2.5, 5, 5, 2.5
 
 class Result1(tk.Frame):
     def __init__(self, app):
-        """설문 데이터 import"""
+        # """설문 데이터 import""" #
         ind_att = pd.read_csv('individual_attribute.csv')
         cul_att = pd.read_csv('cultural_attribute.csv')
 
@@ -77,10 +77,10 @@ class Result1(tk.Frame):
 
         self.result = self.calc_PO_fit(self.ind_r, self.cul_r)
         print("적합도 제곱근 :",pd.DataFrame(self.result[0], index=["과업중심","관계중심","손해회피","이익추구"]))
-        print("적합도 산출 결과 :", pd.Series(self.result[1]))
+        print("적합도 산출 결과 :\n", pd.Series(self.result[1]))
         print("적합도 Score :", self.result[2])
 
-        """데이터 시각화"""
+        # """데이터 시각화""" #
         tk.Frame.__init__(self, app)
         self.app = app
         self.app.geometry("1150x500+420+200")
@@ -93,18 +93,23 @@ class Result1(tk.Frame):
         title = ttk.Label(self, text="적합도 산출 결과", font=font)
         title.pack()
 
-        fig = self.draw(self.result)
-        canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)  #
-        canvas.get_tk_widget().pack()
+        fig = self.draw(self.result)                # 적합도 산출 (시각화 데이터)결과를 fig변수에 대입
+        canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)  # tk canvas에 대입 
+        canvas.get_tk_widget().pack()                              # pack()을 통해 시각화
 
-        bins = [0, 100/3, 100/3*2, 100]
-        labels = ["하", "중", "상"]
+        bins = [0, 100/3, 100/3*2, 100]             # 구간(상중하)을 나누기 위한 리스트
+        labels = ["하", "중", "상"]                  # 구간 리스트에 대한 Label
+        
+        # """pandas의 구간 나누는 cut() 메소드를 통해 구간을 나누고 데이터가 해당하는 구간을 슬라이싱""" #
         cut_off = str(pd.cut([self.result[-1]], bins, right=False, labels=labels))[2:3]
+        
+        # """ 적합도에 대한 Text 출력 """ #
         desc1 = ttk.Label(self.script_frame, text="우리 회사와 직원간에는 총 '{}%'의 특성 적합도를 "
                                      "가지며 적합도 수준은 '{}'입니다.".format(self.result[-1], cut_off),
                           font=tkinter.font.Font(family="Malgun Gothic", size=12, weight="bold"))
         desc1.pack()
-
+        
+        # """ 각 구간에 따른 설명 TEXT 출력 """ #
         if cut_off == "상":
             script = ttk.Label(self.script_frame, text=SCRIPT["result1"][0],
                                 font=tkinter.font.Font(family="Malgun Gothic", size=11))
@@ -195,12 +200,13 @@ class Result1(tk.Frame):
 
 class Result2(tk.Frame):
     def __init__(self, app):
-        """데이터 import"""
+        # """데이터 import""" #
         df = pd.read_csv("Information_Security_Level.csv")
         self.data, self.result = self.calc_mean_and_zip(df)
         self.factors = self.quaternary(self.data)
         print(self.result)
 
+        # """데이터 시각화""" #
         self.idx = -1
         tk.Frame.__init__(self, app)
         self.app = app
@@ -214,12 +220,13 @@ class Result2(tk.Frame):
         self.canvas_frame = tk.Frame(self.container) # 설문 결과를 보여주는 Frame
         self.script_frame = tk.Frame(self.container) # 설문 결과에 대한 설명을 보여주는 Frame
 
-        fig = self.draw(self.data)
-        self.canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
-        self.canvas.get_tk_widget().grid(row=0, column=0)
+        fig = self.draw(self.data)                      # 산점도 데이터를 fig변수에 대입
+        self.canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame) # fig변수를 canvas에 대입
+        self.canvas.get_tk_widget().grid(row=0, column=0)              # grid(0,0)를 통해 시각화
 
-        self.display_script()
-
+        self.display_script()                           # 각 구간(A,B,C,D)에 대한 설명 Text 출력 메소드 
+            
+        # """ 각 구간 설명을 강조하는 Button 생성 및 출력 """ #
         self.btn_frame = tk.Frame(self.script_frame)
         previous_btn = ttk.Button(self.btn_frame, text="◀◀◀이전", command=self.on_previous)
         next_btn = ttk.Button(self.btn_frame, text="다음▶▶▶", command=self.on_next)
@@ -236,6 +243,14 @@ class Result2(tk.Frame):
         self.container.pack()
 
     def calc_mean_and_zip(self, data):
+        """
+        Infomation_Security_Level.csv 파일에서 값을 가져온 뒤, 각각의 열에 대한 평균을 구하고
+        산점도로 표현하기 위한 전처리 메소드
+        :param data: "Infomation_Security_Level.csv"에서 가져온 DataFrame
+        :return:
+            data : 산점도 X(중요도), Y(만족도) 좌표 값
+            result : console창에 출력하기위한 DataFrame
+        """
         means = np.array(list(dict(data.mean().round(2)).values()))
         data = {"중요도" : means[range(1,len(means),2)], "만족도" : means[range(0,len(means),2)]}
 
@@ -243,6 +258,11 @@ class Result2(tk.Frame):
         return data, result
 
     def quaternary(self, data):
+        """
+        중요도,만족도 산점도의 좌표가 어느 영역인지(A,B,C,D) 판별하는 메소드
+        :param data: calc_mean_and_zip() 메소드의 return값중에서 "data"
+        :return: 각 영역에 대한 요인과 그 요인의 산점도 좌표를 dict형태로 반환
+        """
         factors = {"A": {"중요도":[],"만족도":[], "요인":[]}, "B": {"중요도":[],"만족도":[], "요인":[]},
                    "C": {"중요도":[],"만족도":[], "요인":[]}, "D": {"중요도":[],"만족도":[], "요인":[]}}
         temp = zip(data["중요도"],data["만족도"])
@@ -266,19 +286,26 @@ class Result2(tk.Frame):
         return factors
 
     def draw(self, data):
+        """
+        전처리가 끝난 데이터를 통해 시각화하는 메소드
+        각 영역별로 확인 할 수 있도록 if-else문을 통해 fig를 갱신하는 plot updating 알고리즘으로 구현
+        :param data: calc_mean_and_zip()메소드 반환값 중에 "data"
+        :return: 시각화 데이터를 가지고 있는 figure
+        """
         plt.rcParams['font.family'] = 'Malgun Gothic'
         plt.rc('legend', fontsize=6)
 
         fig = plt.figure(figsize=(5, 4.5))
         fig.set_facecolor('#F0F0F0')
         ax = fig.add_subplot()
-
-        if self.idx <= -1:
+        
+        # """ if-else를 통해 각 영역만 집중해서 볼 수 있도록 설계 """ #
+        if self.idx <= -1: # 처음 실행되었을 경우, 모든 영역의 좌표를 보여줌
             for i in range(10):
                 ax.scatter(data["중요도"][i], data["만족도"][i], s=60,
                            label=SCRIPT["result2"]["s1"][i], marker='o')
                 ax.text(data["중요도"][i], data["만족도"][i], str(i+1), fontsize=8)
-        else:
+        else:              # 다음,이전 버튼을 눌렀을 경우, 해당하는 영역의 산점도 좌표만 강조
             factor = self.factors[list(self.factors.keys())[self.idx]]
             for i in range(len(factor["요인"])):
                 ax.scatter(factor["중요도"][i], factor["만족도"][i], s=75,
@@ -304,6 +331,10 @@ class Result2(tk.Frame):
         return fig
 
     def display_script(self):
+        """
+        각 구간(A,B,C,D)에 대한 설명 Text 출력 메소드
+        :return:
+        """
         desc = ttk.Label(self.script_frame, text=SCRIPT["result2"]["s2"][0],
                                font=tkinter.font.Font(family="Malgun Gothic", size=12, weight="bold"))
         desc.pack(pady=5)
