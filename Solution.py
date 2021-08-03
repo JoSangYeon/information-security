@@ -1,17 +1,13 @@
 import tkinter as tk
 import tkinter.font
 from tkinter import ttk
-import tkinter.messagebox as msg
-import time
-import threading
-import pandas as pd
+
 import Survey
 import Result
 
 class Main_Frame(tk.Frame):
     """
     화면 1-1를 구성하는 Frame class
-    2021.07.19 - 추후에 화면구성에 조금더 신경을 쓸 예정 당장은 기능 구현에 힘을 쓰겠다.
     """
     def __init__(self, app):
         tk.Frame.__init__(self, app)

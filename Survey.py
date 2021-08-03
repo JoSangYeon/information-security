@@ -3,10 +3,8 @@ import tkinter.font
 from tkinter import ttk
 import tkinter.messagebox as msg
 import time
-import threading
 import pandas as pd
 
-import Solution
 import Result
 
 """

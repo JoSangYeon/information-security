@@ -32,7 +32,6 @@ import tkinter as tk
 import tkinter.font
 from tkinter import ttk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
 
 import Solution
 
@@ -304,13 +303,13 @@ class Result2(tk.Frame):
             for i in range(10):
                 ax.scatter(data["중요도"][i], data["만족도"][i], s=60,
                            label=SCRIPT["result2"]["s1"][i], marker='o')
-                ax.text(data["중요도"][i], data["만족도"][i], str(i+1), fontsize=8)
+                ax.text(data["중요도"][i], data["만족도"][i], str(i+1), fontsize=9)
         else:              # 다음,이전 버튼을 눌렀을 경우, 해당하는 영역의 산점도 좌표만 강조
             factor = self.factors[list(self.factors.keys())[self.idx]]
             for i in range(len(factor["요인"])):
                 ax.scatter(factor["중요도"][i], factor["만족도"][i], s=75,
                            label=str(i+1)+". "+factor["요인"][i], marker='o')
-                ax.text(factor["중요도"][i], factor["만족도"][i], str(i+1), fontsize=8)
+                ax.text(factor["중요도"][i], factor["만족도"][i], str(i+1), fontsize=9)
             ax.fill(AREA[self.idx][0],AREA[self.idx][1], color="skyblue", alpha=0.5)
 
         for x,y,txt in POINT:
