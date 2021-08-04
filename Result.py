@@ -182,7 +182,7 @@ class Result1(tk.Frame):
             ax.tick_params(axis='x', which='major', pad=15)  ## 각 축과 눈금 사이에 여백을 준다.
 
             ax.set_rlabel_position(0)  ## 반지름 축 눈금 라벨 각도 설정(degree 단위)
-            plt.yticks([0, 5, 10, 15, 20, 25], ['0', '5', '10', '15', '20', '25'], fontsize=12)  ## 반지름 축 눈금 설정
+            plt.yticks([0, 5, 10, 15, 20, 25], ['0', '5', '10', '15', '20', '25'], fontsize=11)  ## 반지름 축 눈금 설정
             plt.ylim(0, 25)
 
             ax.plot(angles, data, color=color, marker='o',linewidth=2, linestyle='solid', label=idx)  ## 레이더 차트 출력
@@ -355,9 +355,9 @@ class Result2(tk.Frame):
         pass
 
     def on_previous(self):
-        self.descs[self.idx].configure(font=tkinter.font.Font(family="Malgun Gothic", weight="normal"))
+        self.descs[self.idx].configure(font=tkinter.font.Font(family="Malgun Gothic", size=9, weight="normal"))
         self.idx = (self.idx-1)%4
-        self.descs[self.idx].configure(font=tkinter.font.Font(family="Malgun Gothic", weight="bold"))
+        self.descs[self.idx].configure(font=tkinter.font.Font(family="Malgun Gothic", size=10, weight="bold"))
         fig = self.draw(self.data)
         self.canvas.get_tk_widget().grid_remove()
         self.canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
