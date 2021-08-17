@@ -8,7 +8,7 @@ import pandas as pd
 import Result
 
 """
-Test에 사용될 설문 스크립트 각 설문에 맞게 dictionary형태로 구성함 
+사용되는 설문 스크립트 각 화면에 맞게 dictionary형태로 구성함 
 """
 SCRIPT = {
     'Survey1': [['나는 성과중심의 가치를 추구한다.',
@@ -53,6 +53,11 @@ class Survey1(tk.Frame):
     개인 특성 측정을 구현
     """
     def __init__(self, app):
+        """
+        frame 생성자
+        각종 위젯들이 생성자에서 생성된다.
+        :param app: 해당 frame을 호출한 Project 객체
+        """
         tk.Frame.__init__(self, app)
         self.app = app
         self.app.geometry("640x580+640+150")  # 크기/위치 설정 (가로*세로+x좌표+y좌료)
@@ -75,6 +80,8 @@ class Survey1(tk.Frame):
         temp_frame = tk.Frame(self)                 # 각 설문요인을 담는 frame
         surv_frame = tk.Frame(temp_frame)           # 각각의 설문 내용을 담는 frame
         check_frame = tk.Frame(temp_frame)          # 각 설문에 대한 checkbox를 담는 frame
+
+        ### 설문에 대한 내용과 check박스를 화면에 배치하는 반복문 ###
         for i in range(len(scr)):
             temp = []
             for k in range(len(scr[i])):
@@ -99,9 +106,10 @@ class Survey1(tk.Frame):
         체크박스의 check여부를 판단하는 메소드
         중복여부도 판단하며 옳게 체크되어있다고 판단되면 CSV 파일에 해당 설문 내용을 저장함
         """
-        f = pd.read_csv("individual_attribute.csv")
+        f = pd.read_csv("individual_attribute.csv") # 파일을 읽어옴
         data = {"date":time.strftime('%Y-%m-%d %I:%M:%S %p', time.localtime())}
 
+        ### 생성했던 check박스들의 내용을 확인하면서 csv파일에 쓸 내용을 구성하는 반복문 ###
         for i in range(len(self.checkvar)):
             for k in range(len(self.checkvar[i])):
                 key = "Q"+str(i+1)+"-"+str(k+1)
@@ -119,7 +127,7 @@ class Survey1(tk.Frame):
         f = f.append(pd.DataFrame([data]))
         f.to_csv('individual_attribute.csv', sep=",", index=False)
         msg.showinfo("Message", "설문 내용이 정상적으로 입력되었습니다.")
-        self.app.switch_frame(Survey2)
+        self.app.switch_frame(Survey2) # 이후 다음 설문문항으로 넘김(switch_frame)
 
 class Survey2(tk.Frame):
     """
@@ -127,6 +135,11 @@ class Survey2(tk.Frame):
     기업 특성 측정을 구현
     """
     def __init__(self, app):
+        """
+        frame 생성자
+        각종 위젯들이 생성자에서 생성된다.
+        :param app: 해당 frame을 호출한 Project 객체
+        """
         tk.Frame.__init__(self, app)
         self.app = app
         self.app.geometry("640x580+640+150")  # 크기/위치 설정 (가로*세로+x좌표+y좌료)
@@ -145,7 +158,7 @@ class Survey2(tk.Frame):
         ttk.Label(self, text='--- ' * 35, font=('Malgun Gothic', 10)).pack(pady=3)
         ttk.Label(self, text="1     2     3     4     5    6").pack(anchor='e', pady=1, ipady=2.4)
         self.checkvar = []                          # checkBox의 check여부를 저장하는 변수를 담는 list
-        scr = SCRIPT['Survey2']                     # 스크립트에서 설문1에 대한 내용을 받아옴
+        scr = SCRIPT['Survey2']                     # 스크립트에서 설문2에 대한 내용을 받아옴
         temp_frame = tk.Frame(self)                 # 각 설문요인을 담는 frame
         surv_frame = tk.Frame(temp_frame)           # 각각의 설문 내용을 담는 frame
         check_frame = tk.Frame(temp_frame)          # 각 설문에 대한 checkbox를 담는 frame
@@ -173,9 +186,10 @@ class Survey2(tk.Frame):
         체크박스의 check여부를 판단하는 메소드
         중복여부도 판단하며 옳게 체크되어있다고 판단되면 CSV 파일에 해당 설문 내용을 저장함
         """
-        f = pd.read_csv("cultural_attribute.csv")
+        f = pd.read_csv("cultural_attribute.csv") # 파일을 읽어옴
         data = {"date":time.strftime('%Y-%m-%d %I:%M:%S %p', time.localtime())}
 
+        ### 생성했던 check박스들의 내용을 확인하면서 csv파일에 쓸 내용을 구성하는 반복문 ###
         for i in range(len(self.checkvar)):
             for k in range(len(self.checkvar[i])):
                 key = "Q"+str(i+1)+"-"+str(k+1)
@@ -193,7 +207,7 @@ class Survey2(tk.Frame):
         f = f.append(pd.DataFrame([data]))
         f.to_csv("cultural_attribute.csv", sep=",", index=False)
         msg.showinfo("Message", "설문 내용이 정상적으로 입력되었습니다.")
-        self.app.switch_frame(Survey3)
+        self.app.switch_frame(Survey3) # 이후 다음 설문문항으로 넘김(switch_frame)
 
 class Survey3(tk.Frame):
     """
@@ -201,6 +215,11 @@ class Survey3(tk.Frame):
     정보보안 수준 측정을 구현
     """
     def __init__(self, app):
+        """
+        frame 생성자
+        각종 위젯들이 생성자에서 생성된다.
+        :param app: 해당 frame을 호출한 Project 객체
+        """
         tk.Frame.__init__(self, app)
         self.app = app
         self.app.geometry("640x640+640+150")  # 크기/위치 설정 (가로*세로+x좌표+y좌료)
@@ -220,10 +239,12 @@ class Survey3(tk.Frame):
         ttk.Label(self, text="만족도\t\t\t중요도           ").pack(anchor='e')
         ttk.Label(self, text="1     2     3     4     5\t1     2     3     4     5").pack(anchor='e', ipady=2.4)
         self.checkvar = []                          # checkBox의 check여부를 저장하는 변수를 담는 list
-        scr = SCRIPT['Survey3']                     # 스크립트에서 설문1에 대한 내용을 받아옴
+        scr = SCRIPT['Survey3']                     # 스크립트에서 설문3에 대한 내용을 받아옴
         temp_frame = tk.Frame(self)                 # 각 설문요인을 담는 frame
         surv_frame = tk.Frame(temp_frame)           # 각각의 설문 내용을 담는 frame
         check_frame = tk.Frame(temp_frame)          # 각 설문에 대한 checkbox를 담는 frame
+
+        ### 설문에 대한 내용과 check박스를 화면에 배치하는 반복문 ###
         for i in range(len(scr)):
             temp = []
             ttk.Label(surv_frame, text=scr[i], font=('Malgun Gothic', 10)).pack(anchor='e')
@@ -253,9 +274,10 @@ class Survey3(tk.Frame):
         체크박스의 check여부를 판단하는 메소드
         중복여부도 판단하며 옳게 체크되어있다고 판단되면 CSV 파일에 해당 설문 내용을 저장함
         """
-        f = pd.read_csv("Information_Security_Level.csv")
+        f = pd.read_csv("Information_Security_Level.csv") # 파일을 읽어옴
         data = {"date":time.strftime('%Y-%m-%d %I:%M:%S %p', time.localtime())}
 
+        ### 생성했던 check박스들의 내용을 확인하면서 csv파일에 쓸 내용을 구성하는 반복문 ###
         for i in range(len(self.checkvar)):
             for k in range(len(self.checkvar[i])):
                 key = "Q"+str(i+1)+"-"+str(k+1)
@@ -273,4 +295,4 @@ class Survey3(tk.Frame):
         f = f.append(pd.DataFrame([data]))
         f.to_csv("Information_Security_Level.csv", sep=",", index=False)
         msg.showinfo("Message", "설문 내용이 정상적으로 입력되었습니다.")
-        self.app.switch_frame(Result.Result1)
+        self.app.switch_frame(Result.Result1) # 이후 다음 설문문항으로 넘김(switch_frame)

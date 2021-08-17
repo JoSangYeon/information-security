@@ -35,6 +35,9 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 import Solution
 
+"""
+결과에 따른 스크립트를 각 경우 따라 맞게 dictionary형태로 구성함 
+"""
 SCRIPT = {
     "result1" : ["\'상\'은 조직과 조직원 간의 목표, 가치 등이 우수한 수준으로 일치한다는 의미입니다."+
                  "\n따라서, 우리 조직은 현재 추진하고 있는 조직 활동을 유지함으로써,"+
@@ -58,13 +61,25 @@ SCRIPT = {
                         "넷째, 중점 개선영역(D). 해당 영역은 정보보안 활동의 중요도는 높으나, 만족도는 낮은 영역으로서,"
                         +"\n{} 요인들의 \n지원을 중점적으로 향상시키는 것이 필요합니다."]}
 }
+### 각 영역에 대한 Label 위치 ###
 POINT = [(0.25,3.15, "A. 현수준 유지영역"), (3.9,4.5, "B. 유지/관리 지속영역"),
          (0.25,0.5, "C. 만족도 제공영역"), (4,0.5, "D. 중점 개선영역")]
+
+### 각 영역의 범위(순서대로 A,B,C,D) ###
 AREA = [([0, 0, 2.5, 2.5], [2.5, 5, 5, 2.5]), ([2.5, 2.5, 5, 5], [2.5, 5, 5, 2.5]),
         ([0, 0, 2.5, 2.5], [0, 2.5, 2.5, 0]), ([2.5, 2.5, 5, 5], [0, 2.5, 2.5, 0])]
 
 class Result1(tk.Frame):
+    """
+    화면 3-1을 구성하는 Frame class
+    적합도 산출 화면을 구현
+    """
     def __init__(self, app):
+        """
+        frame 생성자
+        각종 위젯들이 생성자에서 생성된다.
+        :param app: 해당 frame을 호출한 Project 객체
+        """
         # """설문 데이터 import""" #
         ind_att = pd.read_csv('individual_attribute.csv')
         cul_att = pd.read_csv('cultural_attribute.csv')
@@ -75,7 +90,7 @@ class Result1(tk.Frame):
         print("기업 요인별 평균 :", self.cul_r)
 
         self.result = self.calc_PO_fit(self.ind_r, self.cul_r)
-        print("적합도 제곱근 :",pd.DataFrame(self.result[0], index=["과업중심","관계중심","손해회피","이익추구"]))
+        print("적합도 제곱근 :\n",pd.Series(self.result[0], index=["과업중심","관계중심","손해회피","이익추구"]))
         print("적합도 산출 결과 :\n", pd.Series(self.result[1]))
         print("적합도 Score :", self.result[2])
 
@@ -145,6 +160,15 @@ class Result1(tk.Frame):
         return result
 
     def calc_PO_fit(self, ind, cul):
+        """
+        조직과 개인의 점수차이를 계산하는 메소드
+        :param ind: 개인특성 측정값 평균 
+        :param cul: 조직특성 측정값 평균
+        :return:
+            P0_sub : 각 요인별 점수 차이(제곱근)
+            dict_r : 각 요인과 Score값이 매칭된 dict(제곱값)
+            score  : 적합도 Score
+        """
         ind = np.array(ind)
         cul = np.array(cul)
 
@@ -156,6 +180,11 @@ class Result1(tk.Frame):
         return PO_sub, dict_r ,score
 
     def draw(self, data):
+        """
+        설문 데이터를 방사형데이터로 표현하는 Figure를 생성하는 메소드 
+        :param data: self.calc_PO_fit()메소드의 return 값
+        :return: 4개의 요인의 점수를 방사형으로 표현한 figure 객체
+        """
         df = pd.DataFrame(data[1], index=["개인-조직특성 적합도"])
 
         labels = df.columns[:]
@@ -195,10 +224,23 @@ class Result1(tk.Frame):
         return fig
 
     def next(self):
+        """
+        다음 화면으로 넘어가는 메소드(Result2)
+        생성자에서 생성한 button이 해당 메소드를 command로 가진다.
+        """
         self.app.switch_frame(Result2)
 
 class Result2(tk.Frame):
+    """
+    화면 3-2를 구성하는 Frame class
+    IPA(중요도-만족도) 산출화면을 구현
+    """
     def __init__(self, app):
+        """
+        frame 생성자
+        각종 위젯들이 생성자에서 생성된다.
+        :param app: 해당 frame을 호출한 Project 객체
+        """
         # """데이터 import""" #
         df = pd.read_csv("Information_Security_Level.csv")
         self.data, self.result = self.calc_mean_and_zip(df)
@@ -206,7 +248,7 @@ class Result2(tk.Frame):
         print(self.result)
 
         # """데이터 시각화""" #
-        self.idx = -1
+        self.idx = -1 # Script 출력의 번호를 저장하는 변수
         tk.Frame.__init__(self, app)
         self.app = app
         self.app.geometry("1150x500+380+200")
@@ -289,7 +331,7 @@ class Result2(tk.Frame):
         전처리가 끝난 데이터를 통해 시각화하는 메소드
         각 영역별로 확인 할 수 있도록 if-else문을 통해 fig를 갱신하는 plot updating 알고리즘으로 구현
         :param data: calc_mean_and_zip()메소드 반환값 중에 "data"
-        :return: 시각화 데이터를 가지고 있는 figure
+        :return: 시각화 데이터를 가지고 있는 figure 객체
         """
         plt.rcParams['font.family'] = 'Malgun Gothic'
         plt.rc('legend', fontsize=6)
@@ -332,7 +374,6 @@ class Result2(tk.Frame):
     def display_script(self):
         """
         각 구간(A,B,C,D)에 대한 설명 Text 출력 메소드
-        :return:
         """
         desc = ttk.Label(self.script_frame, text=SCRIPT["result2"]["s2"][0],
                                font=tkinter.font.Font(family="Malgun Gothic", size=12, weight="bold"))
@@ -345,6 +386,10 @@ class Result2(tk.Frame):
             self.descs[-1].pack(pady=3, ipadx=1.5, ipady=1.5, ancho='w')
 
     def on_next(self):
+        """
+        각 영역에 대해 하이라이트되어 볼 수 있도록 하는 메소드(다음 버튼)
+        선택된 영역의 요인들만 강조되어 출력된다.
+        """
         self.descs[self.idx].configure(font=tkinter.font.Font(family="Malgun Gothic", size=9, weight="normal"))
         self.idx = (self.idx+1)%4
         self.descs[self.idx].configure(font=tkinter.font.Font(family="Malgun Gothic", size=10, weight="bold"))
@@ -355,6 +400,10 @@ class Result2(tk.Frame):
         pass
 
     def on_previous(self):
+        """
+        각 영역에 대해 하이라이트되어 볼 수 있도록 하는 메소드(이전 버튼)
+        선택된 영역의 요인들만 강조되어 출력된다.
+        """
         self.descs[self.idx].configure(font=tkinter.font.Font(family="Malgun Gothic", size=9, weight="normal"))
         self.idx = (self.idx-1)%4
         self.descs[self.idx].configure(font=tkinter.font.Font(family="Malgun Gothic", size=10, weight="bold"))
@@ -364,4 +413,8 @@ class Result2(tk.Frame):
         self.canvas.get_tk_widget().grid(row=0, column=0)
 
     def on_return(self):
+        """
+        처음 화면으로 넘어가는 메소드(Main_Frame)
+        생성자에서 생성한 button이 해당 메소드를 command로 가진다.
+        """
         self.app.switch_frame(Solution.Main_Frame)
