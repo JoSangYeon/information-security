@@ -98,7 +98,7 @@ class Survey1(Survey):
             temp = []
             for k in range(len(scr[i])):
                 ttk.Label(surv_frame, text="\tQ{}-{}. ".format(i+1, k+1)+scr[i][k],
-                          font=self.app.font["contents"]).pack(anchor='w')
+                          font=self.app.font["contents1"]).pack(anchor='w')
 
                 inner_frame = ttk.Frame(check_frame)
                 temp.append([tk.IntVar() for _ in range(6)])
@@ -106,8 +106,8 @@ class Survey1(Survey):
                     ttk.Checkbutton(inner_frame, variable=temp[k][j]).pack(padx=5, side='left') # checkBox 생성
                 inner_frame.pack()
             self.checkvar.append(temp)  # checkvar 갱신
-            ttk.Label(surv_frame, text='--- ' * 30, font=self.app.font["contents"]).pack(pady=3, anchor='e')
-            ttk.Label(check_frame, text='--- ' * 15, font=self.app.font["contents"]).pack(pady=3, anchor='w')
+            ttk.Label(surv_frame, text='--- ' * 30, font=self.app.font["contents1"]).pack(pady=3, anchor='e')
+            ttk.Label(check_frame, text='--- ' * 15, font=self.app.font["contents1"]).pack(pady=3, anchor='w')
         surv_frame.pack(side='left', expand=True, fill="both")
         check_frame.pack(side='right', expand=True, fill="both")
         temp_frame.pack(expand=True, fill="both")
@@ -179,7 +179,7 @@ class Survey2(Survey):
             temp = []
             for k in range(len(scr[i])):
                 ttk.Label(surv_frame, text="\tQ{}-{}. ".format(i+1, k+1)+scr[i][k],
-                          font=self.app.font["contents"]).pack(anchor='w')
+                          font=self.app.font["contents1"]).pack(anchor='w')
 
                 inner_frame = ttk.Frame(check_frame)
                 temp.append([tk.IntVar() for _ in range(6)])
@@ -187,8 +187,8 @@ class Survey2(Survey):
                     ttk.Checkbutton(inner_frame, variable=temp[k][j]).pack(padx=5, side='left') # checkBox 생성
                 inner_frame.pack()
             self.checkvar.append(temp)  # checkvar 갱신
-            ttk.Label(surv_frame, text='--- ' * 30, font=self.app.font["contents"]).pack(pady=3, anchor='e')
-            ttk.Label(check_frame, text='--- ' * 15, font=self.app.font["contents"]).pack(pady=3, anchor='w')
+            ttk.Label(surv_frame, text='--- ' * 30, font=self.app.font["contents1"]).pack(pady=3, anchor='e')
+            ttk.Label(check_frame, text='--- ' * 15, font=self.app.font["contents1"]).pack(pady=3, anchor='w')
         surv_frame.pack(side='left', expand=True, fill="both")
         check_frame.pack(side='right', expand=True, fill="both")
         temp_frame.pack(expand=True, fill="both")
@@ -261,7 +261,7 @@ class Survey3(Survey):
         ### 설문에 대한 내용과 check박스를 화면에 배치하는 반복문 ###
         for i in range(len(scr)):
             temp = []
-            ttk.Label(surv_frame, text=scr[i], font=self.app.font["contents"]).pack(anchor='e')
+            ttk.Label(surv_frame, text=scr[i], font=self.app.font["contents1"]).pack(anchor='e')
 
             inner_frame = tk.Frame(check_frame)
             temp.append([tk.IntVar() for _ in range(5)])
@@ -275,8 +275,8 @@ class Survey3(Survey):
                 ttk.Checkbutton(inner_frame, variable=temp[1][j]).pack(side='left', padx=1.5) # 중요도 checkBox 생성
             inner_frame.pack(anchor='e')
             self.checkvar.append(temp)  # checkvar 갱신
-            ttk.Label(surv_frame, text='--- ' * 15, font=self.app.font["contents"]).pack(anchor='e')
-            ttk.Label(check_frame, text='--- ' * 25, font=self.app.font["contents"]).pack(anchor='w')
+            ttk.Label(surv_frame, text='--- ' * 15, font=self.app.font["contents1"]).pack(anchor='e')
+            ttk.Label(check_frame, text='--- ' * 25, font=self.app.font["contents1"]).pack(anchor='w')
         surv_frame.pack(side='left', expand=True, fill="both")
         check_frame.pack(side='right', expand=True, fill="both")
         temp_frame.pack(expand=True, fill="both")
@@ -315,12 +315,14 @@ class Survey3(Survey):
 if __name__ == "__main__":
     window = tk.Tk()
     window.font = {
-            "title" : tkinter.font.Font(family="Malgun Gothic", size=32, weight="bold"),
-            "sub_title" : tkinter.font.Font(family="Malgun Gothic", size=16),
-            "contents" : tkinter.font.Font(family="Malgun Gothic", size=10, weight="bold"),
-            "widget" : tkinter.font.Font(family="Malgun Gothic", size=10),
-            "etc" : tkinter.font.Font(family="Malgun Gothic", size=7)
-            }
+        "title": tkinter.font.Font(family="Malgun Gothic", size=32, weight="bold"),
+        "sub_title": tkinter.font.Font(family="Malgun Gothic", size=16, weight="bold"),
+        "contents1": tkinter.font.Font(family="Malgun Gothic", size=10, weight="bold"),
+        "contents2": tkinter.font.Font(family="Malgun Gothic", size=12),
+        "contents3": tkinter.font.Font(family="Malgun Gothic", size=12, weight="bold"),
+        "widget": tkinter.font.Font(family="Malgun Gothic", size=10),
+        "etc": tkinter.font.Font(family="Malgun Gothic", size=7)
+    }
     window.geometry("{}x{}".format(window.winfo_screenwidth(), window.winfo_screenheight()))  # 크기 (가로x세로)
     s3 = Survey3(window)
     s3.pack()
