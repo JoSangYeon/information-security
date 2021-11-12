@@ -2,6 +2,8 @@ import tkinter as tk
 import tkinter.font
 from tkinter import ttk
 import tkinter.messagebox as msg
+import numpy as np
+import pandas as pd
 
 import Survey
 import Result
@@ -20,8 +22,10 @@ class Project(tk.Tk):
         self.myHeight = self.winfo_screenheight()   # 모니터별 높이 픽셀
         self.font = {
             "title" : tkinter.font.Font(family="Malgun Gothic", size=32, weight="bold"),
-            "sub_title" : tkinter.font.Font(family="Malgun Gothic", size=16),
-            "contents" : tkinter.font.Font(family="Malgun Gothic", size=10, weight="bold"),
+            "sub_title" : tkinter.font.Font(family="Malgun Gothic", size=16, weight="bold"),
+            "contents1" : tkinter.font.Font(family="Malgun Gothic", size=10, weight="bold"),
+            "contents2": tkinter.font.Font(family="Malgun Gothic", size=12),
+            "contents3": tkinter.font.Font(family="Malgun Gothic", size=12, weight="bold"),
             "widget" : tkinter.font.Font(family="Malgun Gothic", size=10),
             "etc" : tkinter.font.Font(family="Malgun Gothic", size=7)
             }
@@ -119,5 +123,10 @@ class Main_Frame(ttk.Frame):
             msg.showwarning("Message", "User ID를 입력해주세요")
             return
         else:
+            ind_att = pd.read_csv('individual_attribute.csv')  # 개인(전체) 설문조사 데이터
+            query = ((ind_att["g_id"] == self.app.groupID) & (ind_att["u_id"] == self.app.userID))
+            if np.all(query == False):  # 결과를 확인하려는 ID가 조회되지 않는 경우 예외처리
+                msg.showerror("Error", "존재하지 않는 ID입니다.")
+                return
             print("group ID : {}\nuser ID : {}".format(self.app.groupID, self.app.userID))
             self.app.switch_frame(Result.Result1)
