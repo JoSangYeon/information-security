@@ -56,13 +56,13 @@ SCRIPT = {
                         "5. 교육/훈련", "6. 홍보/캠페인", "7. 커뮤니케이션", "8. 보안문화", "9. 위기관리", "10. 기술지원(헬프데스크 등)"],
                 "s2" : ["우리 회사 직원들이 고려하는 정보보안 활동은 다음과 같습니다.",
                         "첫째, 현수준 유지영역(A). 해당 영역은 정보보안 활동의 중요도는 낮으나, 만족도는 높은 영역으로서, "
-                        +"\n{} 요인들의 \n지원을 유지하는 것이 필요합니다.",
+                        +"\n     {} 요인들의 \n     지원을 유지하는 것이 필요합니다.",
                         "둘째, 유지/관리 지속영역(B). 해당 영역은 정보보안 활동의 중요도와 만족도를 높게 판단하는 영역으로서, "
-                        +"\n{} 요인들의 \n높은 수준의 지원을 지속적으로 유지시키는 것이 필요합니다.",
+                        +"\n     {} 요인들의 \n     높은 수준의 지원을 지속적으로 유지시키는 것이 필요합니다.",
                         "셋째, 만족도 제공영역(C). 해당 영역은 정보보안 활동의 중요돠 만족도 모두 낮은 영역으로서, "
-                        +"\n{} 요인들의 \n지원에 대한 만족도를 개선할 수 있는 활동이 필요합니다.",
+                        +"\n     {} 요인들의 \n     지원에 대한 만족도를 개선할 수 있는 활동이 필요합니다.",
                         "넷째, 중점 개선영역(D). 해당 영역은 정보보안 활동의 중요도는 높으나, 만족도는 낮은 영역으로서,"
-                        +"\n{} 요인들의 \n지원을 중점적으로 향상시키는 것이 필요합니다."]}
+                        +"\n     {} 요인들의 \n     지원을 중점적으로 향상시키는 것이 필요합니다."]}
 }
 
 class Result1(tk.Frame):
@@ -83,7 +83,11 @@ class Result1(tk.Frame):
         ind_att = pd.read_csv('individual_attribute.csv') # 개인(전체) 설문조사 데이터
         query = ((ind_att["g_id"] == self.app.groupID) & (ind_att["u_id"] == self.app.userID))
         ind_user = ind_att[query]                         # 개인(특정 1인) 설문조사 데이터
+        ind_att = ind_att[ind_att["g_id"] == self.app.groupID]
+
         cul_att = pd.read_csv('cultural_attribute.csv')   # 조직 설문조사 데이터
+        cul_att = cul_att[cul_att["g_id"] == self.app.groupID]
+
 
         self.every_ind_r = self.calc_mean(ind_att)                              # 개인(전체) 요인별 평균 계산
         self.user_ind_r = self.calc_mean(pd.DataFrame(ind_user))                # 개인(1명) 요인별 평균 계산
@@ -174,10 +178,10 @@ class Result1(tk.Frame):
         :return: 4개의 요인의 점수를 방사형으로 표현한 figure 객체
         """
         if flag:
-            df = pd.DataFrame(data[1], index=["개인(전체)-조직특성 적합도"])
+            df = pd.DataFrame(data[1], index=["조직원 전체 - 조직특성 적합도"])
             color = "#66C2A5"
         else:
-            df = pd.DataFrame(data[1], index=["{}-조직특성 적합도".format(self.app.userID)])
+            df = pd.DataFrame(data[1], index=["본인 - 조직특성 적합도"])
             color = "#6594F1"
 
         labels = df.columns[:]
@@ -210,7 +214,7 @@ class Result1(tk.Frame):
         for i in range(len(data)-1):
             ax.text(angles[i], data[i], data[i], fontsize=11, weight="bold")
 
-        fig.legend(loc="upper right") if flag else fig.legend(loc="upper left")
+        fig.legend(loc="upper left") if flag else fig.legend(loc="upper right")
         return fig
 
     def next(self):
@@ -325,8 +329,8 @@ class Result2(tk.Frame):
         return_btn.pack()
 
         meanLabel = ttk.Label(self.script_frame,
-                              text="중요도 평균 : {}\t만족도 평균 : {}".format(self.x_mean, self.y_mean),
-                              font = self.app.font["etc"])
+                              text="중요도 평균 : {}\n만족도 평균 : {}".format(self.x_mean, self.y_mean),
+                              font = self.app.font["sub_title"])
         meanLabel.pack(side="bottom", anchor="w")
 
         self.canvas_frame.pack(side="left")
