@@ -97,12 +97,17 @@ class Main_Frame(ttk.Frame):
         """
         self.app.groupID = self.groupID_E.get()
         self.app.userID = self.userID_E.get()
+        ind_att = pd.read_csv('individual_attribute.csv')  # 개인(전체) 설문조사 데이터
+        query2 = ind_att["u_id"] == self.app.userID
 
         if self.app.groupID == "":
             msg.showwarning("Message", "Group ID를 입력해주세요")
             return
         elif self.app.userID == "":
             msg.showwarning("Message", "User ID를 입력해주세요")
+            return
+        elif len(ind_att[query2]) != 0:
+            msg.showerror("Error", "중복된 ID입니다.")
             return
         else:
             # print("group ID : {}\nuser ID : {}".format(self.app.groupID, self.app.userID))
@@ -128,9 +133,6 @@ class Main_Frame(ttk.Frame):
             query2 = ind_att["u_id"] == self.app.userID
             if np.all(query1 == False):  # 결과를 확인하려는 ID가 조회되지 않는 경우 예외처리
                 msg.showerror("Error", "존재하지 않는 ID입니다.")
-                return
-            elif len(ind_att[query2]) != 0:
-                msg.showerror("Error", "중복된 ID입니다.")
                 return
             print("group ID : {}\nuser ID : {}".format(self.app.groupID, self.app.userID))
             self.app.switch_frame(Result.Result1)
